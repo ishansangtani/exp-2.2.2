@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                📚 Student Management System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/students">All Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-success btn-sm ms-2" href="/students/create">
+                            ➕ Add Student
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="mb-4">👤 Student Details</h1>
+
+                <!-- Success Message -->
+                <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        ✓ <%= successMessage %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <% } %>
+
+                <!-- Student Information Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0"><%= student.name %></h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p><strong>Roll Number:</strong></p>
+                                <p class="text-muted"><%= student.rollNumber %></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Email:</strong></p>
+                                <p class="text-muted"><a href="mailto:<%= student.email %>"><%= student.email %></a></p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p><strong>Course:</strong></p>
+                                <p class="text-muted"><%= student.course %></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Marks:</strong></p>
+                                <p class="text-muted">
+                                    <span class="badge bg-<%= student.marks >= 60 ? 'success' : 'warning' %> fs-6">
+                                        <%= student.marks %>%
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p><strong>Phone:</strong></p>
+                                <p class="text-muted"><a href="tel:<%= student.phone %>"><%= student.phone %></a></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Enrollment Date:</strong></p>
+                                <p class="text-muted"><%= new Date(student.enrollmentDate).toLocaleDateString('en-IN') %></p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <p><strong>Address:</strong></p>
+                                <p class="text-muted"><%= student.address %></p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p><strong>City:</strong></p>
+                                <p class="text-muted"><%= student.city %></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>State:</strong></p>
+                                <p class="text-muted"><%= student.state %></p>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <p class="text-muted small">
+                            <strong>Last Updated:</strong> <%= new Date(student.updatedAt).toLocaleString('en-IN') %>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 mt-4">
+                    <a href="/students/<%= student._id %>/edit" class="btn btn-warning btn-lg">
+                        ✏️ Edit Student
+                    </a>
+                    <form action="/students/<%= student._id %>?_method=DELETE" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure you want to delete this student?')">
+                            🗑️ Delete Student
+                        </button>
+                    </form>
+                    <a href="/students" class="btn btn-secondary btn-lg">
+                        ← Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <p class="mb-0">© 2026 Student Management System | Built with Node.js, Express & MongoDB</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
